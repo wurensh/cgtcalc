@@ -68,11 +68,16 @@ public class DefaultParser {
       kind = .Buy
     case "SELL":
       kind = .Sell
+    case "GIFT":
+      kind = .Gift
     default:
       return nil
     }
 
-    guard splitData.count == 6 else {
+    let isGift = kind == .Gift
+    let expectedNumberOfSplits:UInt = isGift ? 4 : 6
+    
+    guard splitData.count == expectedNumberOfSplits else {
       throw ParserError.IncorrectNumberOfFields(String(data))
     }
 
@@ -86,11 +91,11 @@ public class DefaultParser {
       throw ParserError.InvalidAmount(String(data))
     }
 
-    guard let price = Decimal(string: splitData[4]) else {
+    guard let price = isGift ? Decimal.zero : Decimal(string: splitData[4]) else {
       throw ParserError.InvalidPrice(String(data))
     }
 
-    guard let expenses = Decimal(string: splitData[5]) else {
+    guard let expenses = isGift ? Decimal.zero : Decimal(string: splitData[5]) else {
       throw ParserError.InvalidExpenses(String(data))
     }
 

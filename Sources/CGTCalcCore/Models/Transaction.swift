@@ -11,6 +11,15 @@ public class Transaction {
   public enum Kind {
     case Buy
     case Sell
+    case Gift
+    
+    var description: String {
+      switch self {
+      case .Buy: "BOUGHT"
+      case .Sell: "SOLD"
+      case .Gift: "GIFTED"
+      }
+    }
   }
 
   let kind: Kind

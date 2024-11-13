@@ -62,6 +62,11 @@ extension TaxYear {
   }
 
   static let rates: [TaxYear: Rates] = [
+    TaxYear(yearEnding: 2009): Rates(exemption: 9600, basicRate: 18, higherRate: 18),
+    TaxYear(yearEnding: 2010): Rates(exemption: 9600, basicRate: 18, higherRate: 18),
+    TaxYear(yearEnding: 2011): Rates(exemption: 10100, basicRate: 18, higherRate: 28),
+    TaxYear(yearEnding: 2012): Rates(exemption: 10600, basicRate: 18, higherRate: 28),
+    TaxYear(yearEnding: 2013): Rates(exemption: 10600, basicRate: 18, higherRate: 28),
     TaxYear(yearEnding: 2014): Rates(exemption: 10900, basicRate: 18, higherRate: 28),
     TaxYear(yearEnding: 2015): Rates(exemption: 11000, basicRate: 18, higherRate: 28),
     TaxYear(yearEnding: 2016): Rates(exemption: 11100, basicRate: 18, higherRate: 28),
@@ -73,6 +78,6 @@ extension TaxYear {
     TaxYear(yearEnding: 2022): Rates(exemption: 12300, basicRate: 10, higherRate: 20),
     TaxYear(yearEnding: 2023): Rates(exemption: 12300, basicRate: 10, higherRate: 20),
     TaxYear(yearEnding: 2024): Rates(exemption: 6000, basicRate: 10, higherRate: 20),
-    TaxYear(yearEnding: 2025): Rates(exemption: 3000, basicRate: 10, higherRate: 20)
+    TaxYear(yearEnding: 2025): Rates(exemption: 3000, basicRate: 18, higherRate: 24)
   ]
 }

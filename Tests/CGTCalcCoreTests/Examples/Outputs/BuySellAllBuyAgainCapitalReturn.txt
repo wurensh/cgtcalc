@@ -1,32 +1,56 @@
 # SUMMARY
 
-Tax year    Gain    Proceeds   Exemption   Loss carry   Taxable gain   Tax (basic)   Tax (higher)
-=================================================================================================
-2018/2019   £1084   £19422     £11700      £0           £0             £0            £0          
-2019/2020   £-6     £7884      £12000      £6           £0             £0            £0          
+Tax year    No. Disposals   Proceeds   Allowable Costs   Gain b/f Losses   Losses   Net Gain   Exemption   Loss carry   Taxable gain   Tax (basic)   Tax (higher)
+=================================================================================================================================================================
+2018/2019   1               £19422     £18338            £1084             £0       £1084      £11700      £0           £0             £0            £0          
+2019/2020   1               £7884      £7891             £0                £6       £-6        £12000      £6           £0             £0            £0          
 
 
 # TAX YEAR DETAILS
 
 ## TAX YEAR 2018/2019
 
-1 gains with total of 1084.
-0 losses with total of 0.
+1) SOLD 100 shares of GB00B3TYHH97 at £194.22 per share on 01/02/2019 for GAIN of £1084
 
-1) SOLD 100 of GB00B3TYHH97 on 01/02/2019 for GAIN of £1084
-Matches with:
-  - SECTION 104: 100 at cost basis of £183.25
-Calculation: (100 * 194.22 - 12.5) - ( (100 * 183.25) ) = 1084
+Matches with holdings(s):
+  • SECTION 104: 100 shares at cost basis of £183.25
+
+Calculation: 
+ • PROCEEDS:
+	100 shares x £194.22 = £19422
+ • COSTS:
+	Disposal fees: £12.5
+	Acquisition cost: 100 shares x £183.25 = £18325
+
+Total proceeds = £19422
+Total costs    = £18337.5
+
+Total gain     = £1084
+Total loss     = £0
+
+________________________________________
 
 ## TAX YEAR 2019/2020
 
-0 gains with total of 0.
-1 losses with total of 6.
+1) SOLD 40 shares of GB00B3TYHH97 at £197.12 per share on 01/06/2019 for LOSS of £6
 
-1) SOLD 40 of GB00B3TYHH97 on 01/06/2019 for LOSS of £6
-Matches with:
-  - SECTION 104: 40 at cost basis of £196.95225
-Calculation: (40 * 197.12 - 12.5) - ( (40 * 196.95225) ) = -6
+Matches with holdings(s):
+  • SECTION 104: 40 shares at cost basis of £196.95225
+
+Calculation: 
+ • PROCEEDS:
+	40 shares x £197.12 = £7884.8
+ • COSTS:
+	Disposal fees: £12.5
+	Acquisition cost: 40 shares x £196.95225 = £7878.09
+
+Total proceeds = £7884.8
+Total costs    = £7890.59
+
+Total gain     = £0
+Total loss     = £6
+
+________________________________________
 
 
 # TRANSACTIONS

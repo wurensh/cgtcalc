@@ -1,26 +1,53 @@
 # SUMMARY
 
-Tax year    Gain   Proceeds   Exemption   Loss carry   Taxable gain   Tax (basic)   Tax (higher)
-================================================================================================
-2018/2019   £629   £5440      £11700      £0           £0             £0            £0          
+Tax year    No. Disposals   Proceeds   Allowable Costs   Gain b/f Losses   Losses   Net Gain   Exemption   Loss carry   Taxable gain   Tax (basic)   Tax (higher)
+=================================================================================================================================================================
+2018/2019   2               £5440      £4811             £629              £0       £629       £11700      £0           £0             £0            £0          
 
 
 # TAX YEAR DETAILS
 
 ## TAX YEAR 2018/2019
 
-2 gains with total of 629.
-0 losses with total of 0.
+1) SOLD 700 shares of Lobster at £4.8 per share on 01/05/2018 for GAIN of £329
 
-1) SOLD 700 of Lobster on 01/05/2018 for GAIN of £329
-Matches with:
-  - SECTION 104: 1500 at cost basis of £4.18667
-Calculation: (700 * 4.8 - 100) - ( (700 * 4.18667) ) = 329
+Matches with holdings(s):
+  • SECTION 104: 1500 shares at cost basis of £4.18667
 
-2) SOLD 400 of Lobster on 01/02/2019 for GAIN of £300
-Matches with:
-  - SECTION 104: 800 at cost basis of £4.18667
-Calculation: (400 * 5.2 - 105) - ( (400 * 4.18667) ) = 300
+Calculation: 
+ • PROCEEDS:
+	700 shares x £4.8 = £3360
+ • COSTS:
+	Disposal fees: £100
+	Acquisition cost: 700 shares x £4.18667 = £2930.67
+
+Total proceeds = £3360
+Total costs    = £3030.67
+
+Total gain     = £329
+Total loss     = £0
+
+________________________________________
+
+2) SOLD 400 shares of Lobster at £5.2 per share on 01/02/2019 for GAIN of £300
+
+Matches with holdings(s):
+  • SECTION 104: 800 shares at cost basis of £4.18667
+
+Calculation: 
+ • PROCEEDS:
+	400 shares x £5.2 = £2080
+ • COSTS:
+	Disposal fees: £105
+	Acquisition cost: 400 shares x £4.18667 = £1674.67
+
+Total proceeds = £2080
+Total costs    = £1779.67
+
+Total gain     = £300
+Total loss     = £0
+
+________________________________________
 
 
 # TRANSACTIONS

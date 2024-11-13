@@ -1,43 +1,79 @@
 # SUMMARY
 
-Tax year    Gain     Proceeds   Exemption   Loss carry   Taxable gain   Tax (basic)   Tax (higher)
-==================================================================================================
-2017/2018   £-1000   £0         £11300      £1000        £0             £0            £0          
-2018/2019   £1000    £2000      £11700      £1000        £0             £0            £0          
-2019/2020   £19000   £20000     £12000      £0           £6000          £600          £1200       
+Tax year    No. Disposals   Proceeds   Allowable Costs   Gain b/f Losses   Losses   Net Gain   Exemption   Loss carry   Taxable gain   Tax (basic)   Tax (higher)
+=================================================================================================================================================================
+2017/2018   1               £0         £1000             £0                £1000    £-1000     £11300      £1000        £0             £0            £0          
+2018/2019   1               £2000      £1000             £1000             £0       £1000      £11700      £1000        £0             £0            £0          
+2019/2020   1               £20000     £1000             £19000            £0       £19000     £12000      £0           £6000          £600          £1200       
 
 
 # TAX YEAR DETAILS
 
 ## TAX YEAR 2017/2018
 
-0 gains with total of 0.
-1 losses with total of 1000.
+1) SOLD 1 shares of GB00B41YBW71 at £0 per share on 01/01/2018 for LOSS of £1000
 
-1) SOLD 1 of GB00B41YBW71 on 01/01/2018 for LOSS of £1000
-Matches with:
-  - SAME DAY: 1 bought on 01/01/2018 at £1000
-Calculation: (1 * 0 - 0) - ( (1 * 1000 + 0) ) = -1000
+Matches with holdings(s):
+  • SAME DAY: 1 shares bought on 01/01/2018 at £1000
+
+Calculation: 
+ • PROCEEDS:
+	1 shares x £0 = £0
+ • COSTS:
+	Disposal fees: £0
+	Acquisition cost: (1 shares x 1000) + £0 fees = £1000
+
+Total proceeds = £0
+Total costs    = £1000
+
+Total gain     = £0
+Total loss     = £1000
+
+________________________________________
 
 ## TAX YEAR 2018/2019
 
-1 gains with total of 1000.
-0 losses with total of 0.
+1) SOLD 1 shares of GB00B41YBW71 at £2000 per share on 01/01/2019 for GAIN of £1000
 
-1) SOLD 1 of GB00B41YBW71 on 01/01/2019 for GAIN of £1000
-Matches with:
-  - SAME DAY: 1 bought on 01/01/2019 at £1000
-Calculation: (1 * 2000 - 0) - ( (1 * 1000 + 0) ) = 1000
+Matches with holdings(s):
+  • SAME DAY: 1 shares bought on 01/01/2019 at £1000
+
+Calculation: 
+ • PROCEEDS:
+	1 shares x £2000 = £2000
+ • COSTS:
+	Disposal fees: £0
+	Acquisition cost: (1 shares x 1000) + £0 fees = £1000
+
+Total proceeds = £2000
+Total costs    = £1000
+
+Total gain     = £1000
+Total loss     = £0
+
+________________________________________
 
 ## TAX YEAR 2019/2020
 
-1 gains with total of 19000.
-0 losses with total of 0.
+1) SOLD 1 shares of GB00B41YBW71 at £20000 per share on 01/01/2020 for GAIN of £19000
 
-1) SOLD 1 of GB00B41YBW71 on 01/01/2020 for GAIN of £19000
-Matches with:
-  - SAME DAY: 1 bought on 01/01/2020 at £1000
-Calculation: (1 * 20000 - 0) - ( (1 * 1000 + 0) ) = 19000
+Matches with holdings(s):
+  • SAME DAY: 1 shares bought on 01/01/2020 at £1000
+
+Calculation: 
+ • PROCEEDS:
+	1 shares x £20000 = £20000
+ • COSTS:
+	Disposal fees: £0
+	Acquisition cost: (1 shares x 1000) + £0 fees = £1000
+
+Total proceeds = £20000
+Total costs    = £1000
+
+Total gain     = £19000
+Total loss     = £0
+
+________________________________________
 
 
 # TRANSACTIONS

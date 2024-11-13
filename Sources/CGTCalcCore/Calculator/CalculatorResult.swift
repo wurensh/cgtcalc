@@ -13,14 +13,45 @@ public struct CalculatorResult {
 
   struct DisposalResult {
     let disposal: Transaction
-    let gain: Decimal
+    private let _gain: Decimal
     let disposalMatches: [DisposalMatch]
+    
+    init(disposal: Transaction, disposalMatches: [DisposalMatch]) {
+      self.disposal = disposal
+      self.disposalMatches = disposalMatches
+      self._gain = TaxMethods.roundedGain(disposalMatches.reduce(Decimal.zero) {$0 + $1.gain})
+    }
+
+    /// Returns costs associated with this disposal, namely the acquisition cost (plus any acquisition expenses) and any
+    /// fees/expenses associated with the disposal. Used for Tax Return summary
+    var allowableCosts: Decimal { disposalMatches.reduce(disposal.expenses) { $0 + $1.acquisitionCostIncludingExpenses} }
+    
+    /// Returns the gross proceeds of the disposal (the amount *before* any expenses/fees or other costs have been deducted
+    /// This is used for the Tax Return 'disposable proceeds' box
+    var grossProceeds: Decimal { disposalMatches.reduce(Decimal.zero) { $0 + $1.grossDisposalProceeds} }
+    
+    /// Returns the net gain for this disposal. If a loss this returns zero
+    var gain: Decimal { _gain.isSignMinus ? Decimal.zero : _gain }
+    
+    /// Returns the net loss for this disposal. If no loss then returns zero
+    var loss: Decimal {_gain.isSignMinus ? abs(_gain) : Decimal.zero}
+    
+    /// Returns true if this disposal related to a transfer/gift of assets.
+    var isGift:Bool { disposal.kind == .Gift }
+    
+    /// Returns the unit price of the disposal. This value is normally specified in the transactions file, however for
+    /// gift disposals the price needs to be derived from the transferring assets in order to have a net-zero "gain".
+    var disposalUnitPrice: Decimal { isGift ? grossProceeds / disposal.amount : disposal.price }
   }
 
   struct TaxYearSummary {
     let taxYear: TaxYear
     let gain: Decimal
     let proceeds: Decimal
+    let numberOfDisposals: Int
+    let totalAllowableCosts: Decimal
+    let totalGainsBeforeLosses: Decimal
+    let totalLosses: Decimal
     let exemption: Decimal
     let carryForwardLoss: Decimal
     let taxableGain: Decimal
@@ -33,34 +64,30 @@ public struct CalculatorResult {
     self.input = input
 
     var carryForwardLoss = Decimal.zero
-    self.taxYearSummaries = try disposalMatches
-      .reduce(into: [TaxYear: [DisposalMatch]]()) { result, disposalMatch in
-        var disposalMatches = result[disposalMatch.taxYear, default: []]
-        disposalMatches.append(disposalMatch)
-        result[disposalMatch.taxYear] = disposalMatches
-      }
+    self.taxYearSummaries = try Dictionary(grouping: disposalMatches, by: \.taxYear)
       .sorted { $0.key < $1.key }
       .map { taxYear, disposalMatches in
-        var disposalMatchesByDisposal: [Transaction: [DisposalMatch]] = [:]
-        var gainByDisposal: [Transaction: Decimal] = [:]
-
-        var totalProceeds = Decimal.zero
-
-        disposalMatches.forEach { disposalMatch in
-          let disposal = disposalMatch.disposal.transaction
-          var matches = disposalMatchesByDisposal[disposal, default: []]
-          matches.append(disposalMatch)
-          disposalMatchesByDisposal[disposal] = matches
-          gainByDisposal[disposal, default: Decimal.zero] += disposalMatch.gain
-          totalProceeds += disposalMatch.disposal.value
-        }
+        let disposalMatchesByDisposal = Dictionary(grouping: disposalMatches, by: \.disposal.transaction)
 
         var totalGain = Decimal.zero
+        var numberOfDisposals = 0
+        var totalLosses = Decimal.zero
+        var totalGainsBeforeLosses = Decimal.zero
+        var totalProceeds = Decimal.zero
+        var totalAllowableCosts = Decimal.zero
+
         let disposalResults =
           disposalMatchesByDisposal.map { disposal, disposalMatches -> DisposalResult in
-            let roundedGain = TaxMethods.roundedGain(gainByDisposal[disposal]!)
-            totalGain += roundedGain
-            return DisposalResult(disposal: disposal, gain: roundedGain, disposalMatches: disposalMatches)
+            let disposalResult = DisposalResult(disposal: disposal, disposalMatches: disposalMatches)
+            // Update tax year running totals
+            numberOfDisposals += 1
+            totalGain += disposalResult.gain - disposalResult.loss
+            totalGainsBeforeLosses += disposalResult.gain
+            totalLosses += disposalResult.loss
+            totalProceeds += disposalResult.grossProceeds
+            totalAllowableCosts += disposalResult.allowableCosts
+
+            return disposalResult
           }
           .sorted {
             if $0.disposal.date == $1.disposal.date {
@@ -92,6 +119,10 @@ public struct CalculatorResult {
           taxYear: taxYear,
           gain: totalGain,
           proceeds: TaxMethods.roundedGain(totalProceeds),
+          numberOfDisposals: numberOfDisposals,
+          totalAllowableCosts: TaxMethods.roundedExpense(totalAllowableCosts),
+          totalGainsBeforeLosses: totalGainsBeforeLosses,
+          totalLosses: totalLosses,
           exemption: taxYearRates.exemption,
           carryForwardLoss: carryForwardLoss,
           taxableGain: taxableGain,

@@ -1,32 +1,56 @@
 # SUMMARY
 
-Tax year    Gain   Proceeds   Exemption   Loss carry   Taxable gain   Tax (basic)   Tax (higher)
-================================================================================================
-2019/2020   £28    £525       £12000      £0           £0             £0            £0          
-2020/2021   £57    £500       £12300      £0           £0             £0            £0          
+Tax year    No. Disposals   Proceeds   Allowable Costs   Gain b/f Losses   Losses   Net Gain   Exemption   Loss carry   Taxable gain   Tax (basic)   Tax (higher)
+=================================================================================================================================================================
+2019/2020   1               £525       £497              £28               £0       £28        £12000      £0           £0             £0            £0          
+2020/2021   1               £500       £443              £57               £0       £57        £12300      £0           £0             £0            £0          
 
 
 # TAX YEAR DETAILS
 
 ## TAX YEAR 2019/2020
 
-1 gains with total of 28.
-0 losses with total of 0.
+1) SOLD 5 shares of FOOBAR at £105 per share on 01/09/2019 for GAIN of £28
 
-1) SOLD 5 of FOOBAR on 01/09/2019 for GAIN of £28
-Matches with:
-  - SECTION 104: 10 at cost basis of £99.33333
-Calculation: (5 * 105 - 0) - ( (5 * 99.33333) ) = 28
+Matches with holdings(s):
+  • SECTION 104: 10 shares at cost basis of £99.33333
+
+Calculation: 
+ • PROCEEDS:
+	5 shares x £105 = £525
+ • COSTS:
+	Disposal fees: £0
+	Acquisition cost: 5 shares x £99.33333 = £496.67
+
+Total proceeds = £525
+Total costs    = £496.67
+
+Total gain     = £28
+Total loss     = £0
+
+________________________________________
 
 ## TAX YEAR 2020/2021
 
-1 gains with total of 57.
-0 losses with total of 0.
+1) SOLD 5 shares of FOOBAR at £100 per share on 01/07/2020 for GAIN of £57
 
-1) SOLD 5 of FOOBAR on 01/07/2020 for GAIN of £57
-Matches with:
-  - SECTION 104: 25 at cost basis of £88.53333
-Calculation: (5 * 100 - 0) - ( (5 * 88.53333) ) = 57
+Matches with holdings(s):
+  • SECTION 104: 25 shares at cost basis of £88.53333
+
+Calculation: 
+ • PROCEEDS:
+	5 shares x £100 = £500
+ • COSTS:
+	Disposal fees: £0
+	Acquisition cost: 5 shares x £88.53333 = £442.67
+
+Total proceeds = £500
+Total costs    = £442.67
+
+Total gain     = £57
+Total loss     = £0
+
+________________________________________
 
 
 # TRANSACTIONS

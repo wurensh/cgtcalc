@@ -1,21 +1,33 @@
 # SUMMARY
 
-Tax year    Gain   Proceeds   Exemption   Loss carry   Taxable gain   Tax (basic)   Tax (higher)
-================================================================================================
-2019/2020   £417   £7768      £12000      £0           £0             £0            £0          
+Tax year    No. Disposals   Proceeds   Allowable Costs   Gain b/f Losses   Losses   Net Gain   Exemption   Loss carry   Taxable gain   Tax (basic)   Tax (higher)
+=================================================================================================================================================================
+2019/2020   1               £7768      £7352             £417              £0       £417       £12000      £0           £0             £0            £0          
 
 
 # TAX YEAR DETAILS
 
 ## TAX YEAR 2019/2020
 
-1 gains with total of 417.
-0 losses with total of 0.
+1) SOLD 40 shares of GB00B3TYHH97 at £194.22 per share on 05/12/2019 for GAIN of £417
 
-1) SOLD 40 of GB00B3TYHH97 on 05/12/2019 for GAIN of £417
-Matches with:
-  - SECTION 104: 40 at cost basis of £183.47975
-Calculation: (40 * 194.22 - 12.5) - ( (40 * 183.47975) ) = 417
+Matches with holdings(s):
+  • SECTION 104: 40 shares at cost basis of £183.47975
+
+Calculation: 
+ • PROCEEDS:
+	40 shares x £194.22 = £7768.8
+ • COSTS:
+	Disposal fees: £12.5
+	Acquisition cost: 40 shares x £183.47975 = £7339.19
+
+Total proceeds = £7768.8
+Total costs    = £7351.69
+
+Total gain     = £417
+Total loss     = £0
+
+________________________________________
 
 
 # TRANSACTIONS

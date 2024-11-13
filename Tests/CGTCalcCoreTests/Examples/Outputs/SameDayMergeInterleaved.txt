@@ -1,21 +1,33 @@
 # SUMMARY
 
-Tax year    Gain   Proceeds   Exemption   Loss carry   Taxable gain   Tax (basic)   Tax (higher)
-================================================================================================
-2018/2019   £-19   £160       £11700      £19          £0             £0            £0          
+Tax year    No. Disposals   Proceeds   Allowable Costs   Gain b/f Losses   Losses   Net Gain   Exemption   Loss carry   Taxable gain   Tax (basic)   Tax (higher)
+=================================================================================================================================================================
+2018/2019   1               £160       £179              £0                £19      £-19       £11700      £19          £0             £0            £0          
 
 
 # TAX YEAR DETAILS
 
 ## TAX YEAR 2018/2019
 
-0 gains with total of 0.
-1 losses with total of 19.
+1) SOLD 20 shares of GB00B41YBW71 at £8 per share on 28/10/2018 for LOSS of £19
 
-1) SOLD 20 of GB00B41YBW71 on 28/10/2018 for LOSS of £19
-Matches with:
-  - SECTION 104: 30 at cost basis of £8.21667
-Calculation: (20 * 8 - 14.5) - ( (20 * 8.21667) ) = -19
+Matches with holdings(s):
+  • SECTION 104: 30 shares at cost basis of £8.21667
+
+Calculation: 
+ • PROCEEDS:
+	20 shares x £8 = £160
+ • COSTS:
+	Disposal fees: £14.5
+	Acquisition cost: 20 shares x £8.21667 = £164.33
+
+Total proceeds = £160
+Total costs    = £178.83
+
+Total gain     = £0
+Total loss     = £19
+
+________________________________________
 
 
 # TRANSACTIONS

@@ -1,21 +1,33 @@
 # SUMMARY
 
-Tax year    Gain   Proceeds   Exemption   Loss carry   Taxable gain   Tax (basic)   Tax (higher)
-================================================================================================
-2018/2019   £40    £240       £11700      £0           £0             £0            £0          
+Tax year    No. Disposals   Proceeds   Allowable Costs   Gain b/f Losses   Losses   Net Gain   Exemption   Loss carry   Taxable gain   Tax (basic)   Tax (higher)
+=================================================================================================================================================================
+2018/2019   1               £240       £200              £40               £0       £40        £11700      £0           £0             £0            £0          
 
 
 # TAX YEAR DETAILS
 
 ## TAX YEAR 2018/2019
 
-1 gains with total of 40.
-0 losses with total of 0.
+1) SOLD 10 shares of FOO at £24 per share on 01/04/2019 for GAIN of £40
 
-1) SOLD 10 of FOO on 01/04/2019 for GAIN of £40
-Matches with:
-  - SECTION 104: 10 at cost basis of £20
-Calculation: (10 * 24 - 0) - ( (10 * 20) ) = 40
+Matches with holdings(s):
+  • SECTION 104: 10 shares at cost basis of £20
+
+Calculation: 
+ • PROCEEDS:
+	10 shares x £24 = £240
+ • COSTS:
+	Disposal fees: £0
+	Acquisition cost: 10 shares x £20 = £200
+
+Total proceeds = £240
+Total costs    = £200
+
+Total gain     = £40
+Total loss     = £0
+
+________________________________________
 
 
 # TRANSACTIONS

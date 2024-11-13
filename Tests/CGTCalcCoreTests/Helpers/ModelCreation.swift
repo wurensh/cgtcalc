@@ -14,16 +14,16 @@ struct ModelCreation {
     _ date: String,
     _ asset: String,
     _ amount: String,
-    _ price: String,
-    _ expenses: String) -> Transaction
+    _ price: String? = "0.0",
+    _ expenses: String? = "0.0") -> Transaction
   {
     return Transaction(
       kind: kind,
       date: DateCreation.date(fromString: date),
       asset: asset,
       amount: Decimal(string: amount)!,
-      price: Decimal(string: price)!,
-      expenses: Decimal(string: expenses)!)
+      price: Decimal(string: price!)!,
+      expenses: Decimal(string: expenses!)!)
   }
 
   static func assetEvent(_ kind: AssetEvent.Kind, _ date: String, _ asset: String) -> AssetEvent {

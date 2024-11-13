@@ -235,4 +235,35 @@ class DefaultParserTests: XCTestCase {
     let data = "UNSPLIT 15/08/2020 Foo abc"
     XCTAssertThrowsError(try sut.assetEvent(fromData: Substring(data)))
   }
+
+  func testParseGiftTransactionCorrect() throws {
+    let sut = DefaultParser()
+    let data = "GIFT 15/08/2020 Foo 100"
+    let transaction = try sut.transaction(fromData: Substring(data))
+    XCTAssertNotNil(transaction)
+    XCTAssertEqual(transaction!.kind, .Gift)
+    XCTAssertEqual(transaction!.date, Date(timeIntervalSince1970: 1597449600))
+    XCTAssertEqual(transaction!.asset, "Foo")
+    XCTAssertEqual(transaction!.amount, Decimal(100))
+    XCTAssertEqual(transaction!.price, Decimal.zero)
+    XCTAssertEqual(transaction!.expenses, Decimal.zero)
+  }
+
+  func testParseGiftTransactionTooManyArguments() throws {
+    let sut = DefaultParser()
+    let data = "GIFT 15/08/2020 Foo 100 30"
+    XCTAssertThrowsError(try sut.transaction(fromData: Substring(data)))
+  }
+
+  func testParseGiftTransactionTooFewArguments() throws {
+    let sut = DefaultParser()
+    let data = "GIFT 15/08/2020 Foo"
+    XCTAssertThrowsError(try sut.transaction(fromData: Substring(data)))
+  }
+
+  func testParseGiftTransactionIncorrectNumberFormat() throws {
+    let sut = DefaultParser()
+    let data = "GIFT 15/08/2020 Foo Bar"
+    XCTAssertThrowsError(try sut.transaction(fromData: Substring(data)))
+  }
 }

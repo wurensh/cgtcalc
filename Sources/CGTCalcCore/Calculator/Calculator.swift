@@ -80,7 +80,7 @@ public class Calculator {
       .filter { $0.kind == .Buy }
       .sorted { $0.date < $1.date }
     let disposals = transactions
-      .filter { $0.kind == .Sell }
+      .filter { $0.kind == .Sell || $0.kind == .Gift}
       .sorted { $0.date < $1.date }
 
     func group(_ transactions: [Transaction]) throws -> [TransactionToMatch] {
@@ -196,7 +196,7 @@ public class Calculator {
           let transactionTuple = TransactionTuple(transaction: transaction)
           acquisitionsMatched.append(transactionTuple)
           netAcquisitionsAmount += transaction.amount
-        case .Sell:
+        case .Sell,.Gift:
           // Run over all acquisitions to now and remove this sale in a FIFO way
           var amountLeft = transaction.amount
 
@@ -296,7 +296,7 @@ public class Calculator {
           let transactionTuple = TransactionTuple(transaction: transaction)
           acquisitionsMatched.append(transactionTuple)
           netAcquisitionsAmount += transaction.amount
-        case .Sell:
+        case .Sell,.Gift:
           // Run over all acquisitions to now and remove this sale in a FIFO way
           var amountLeft = transaction.amount
           acquisitionsMatched.forEach { acquisitionTransaction in

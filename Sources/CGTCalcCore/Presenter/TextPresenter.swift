@@ -43,8 +43,8 @@ public class TextPresenter: Presenter {
     return .string(output)
   }
 
-  private func formattedCurrency(_ amount: Decimal) -> String {
-    return "£\(amount.rounded(to: 2).string)"
+  private static func formattedCurrency(_ amount: Decimal, _ places:Int = 2) -> String {
+    return "£\(amount.rounded(to: places).string)"
   }
 
   private func summaryTable() -> String {
@@ -52,21 +52,29 @@ public class TextPresenter: Presenter {
       .reduce(into: [[String]]()) { output, summary in
         let row = [
           summary.taxYear.string,
-          self.formattedCurrency(summary.gain),
-          self.formattedCurrency(summary.proceeds),
-          self.formattedCurrency(summary.exemption),
-          self.formattedCurrency(summary.carryForwardLoss),
-          self.formattedCurrency(summary.taxableGain),
-          self.formattedCurrency(summary.basicRateTax),
-          self.formattedCurrency(summary.higherRateTax)
+          String(summary.numberOfDisposals),
+          TextPresenter.formattedCurrency(summary.proceeds),
+          TextPresenter.formattedCurrency(summary.totalAllowableCosts),
+          TextPresenter.formattedCurrency(summary.totalGainsBeforeLosses),
+          TextPresenter.formattedCurrency(summary.totalLosses),
+          TextPresenter.formattedCurrency(summary.gain),
+          TextPresenter.formattedCurrency(summary.exemption),
+          TextPresenter.formattedCurrency(summary.carryForwardLoss),
+          TextPresenter.formattedCurrency(summary.taxableGain),
+          TextPresenter.formattedCurrency(summary.basicRateTax),
+          TextPresenter.formattedCurrency(summary.higherRateTax)
         ]
         output.append(row)
       }
 
     let headerRow = [
       "Tax year",
-      "Gain",
+      "No. Disposals",
       "Proceeds",
+      "Allowable Costs",
+      "Gain b/f Losses",
+      "Losses",
+      "Net Gain",
       "Exemption",
       "Loss carry",
       "Taxable gain",
@@ -102,29 +110,22 @@ public class TextPresenter: Presenter {
       .reduce(into: "") { output, summary in
         output += "## TAX YEAR \(summary.taxYear)\n\n"
 
-        let gains = summary.disposalResults.filter({$0.gain >= 0})
-        output += "\(gains.count) gains with total of \(gains.reduce(Decimal.zero) {$0 + $1.gain}).\n"
-
-        let losses = summary.disposalResults.filter({$0.gain < 0})
-        output += "\(losses.count) losses with total of \(losses.reduce(Decimal.zero) {$0 - $1.gain}).\n"
-
-        output += "\n"
-
         var count = 1
         summary.disposalResults
           .forEach { disposalResult in
-            output += "\(count)) SOLD \(disposalResult.disposal.amount)"
-            output += " of \(disposalResult.disposal.asset)"
+            output += "\(count)) \(disposalResult.disposal.kind.description) \(disposalResult.disposal.amount) shares"
+            output += " of \(disposalResult.disposal.asset) at \(TextPresenter.formattedCurrency(disposalResult.disposalUnitPrice,5)) per share"
             output += " on \(self.dateFormatter.string(from: disposalResult.disposal.date))"
             output += " for "
-            output += disposalResult.gain.isSignMinus ? "LOSS" : "GAIN"
-            output +=
-              " of \(self.formattedCurrency(disposalResult.gain * (disposalResult.gain.isSignMinus ? -1 : 1)))\n"
-            output += "Matches with:\n"
+            output += disposalResult.loss.isZero ? disposalResult.gain.isZero ? "NO NET GAIN\n" : 
+            "GAIN of \(TextPresenter.formattedCurrency(disposalResult.gain))\n" :
+            "LOSS of \(TextPresenter.formattedCurrency(disposalResult.loss))\n"
+            output += "\nMatches with holdings(s):\n"
             disposalResult.disposalMatches.forEach { disposalMatch in
-              output += "  - \(TextPresenter.disposalMatchDetails(disposalMatch, dateFormatter: self.dateFormatter))\n"
+              output += "  • \(TextPresenter.disposalMatchDetails(disposalMatch, dateFormatter: self.dateFormatter))\n"
             }
-            output += "Calculation: \(TextPresenter.disposalResultCalculationString(disposalResult))\n\n"
+            output += "\nCalculation: \(TextPresenter.disposalResultCalculationString(disposalResult))\n"
+              output += "\n________________________________________\n\n"
             count += 1
           }
       }
@@ -136,15 +137,9 @@ public class TextPresenter: Presenter {
     }
 
     return self.result.input.transactions.reduce(into: "") { result, transaction in
-      result += "\(dateFormatter.string(from: transaction.date)) "
-      switch transaction.kind {
-      case .Buy:
-        result += "BOUGHT "
-      case .Sell:
-        result += "SOLD "
-      }
-      result +=
-        "\(transaction.amount) of \(transaction.asset) at £\(transaction.price) with £\(transaction.expenses) expenses\n"
+      result += "\(dateFormatter.string(from: transaction.date)) \(transaction.kind.description) \(transaction.amount) of \(transaction.asset)"
+      if transaction.kind != .Gift { result += " at £\(transaction.price) with £\(transaction.expenses) expenses"}
+      result += "\n"
     }
   }
 
@@ -157,9 +152,9 @@ public class TextPresenter: Presenter {
       result += "\(dateFormatter.string(from: assetEvent.date)) \(assetEvent.asset) "
       switch assetEvent.kind {
       case .CapitalReturn(let amount, let value):
-        result += "CAPITAL RETURN on \(amount) for \(self.formattedCurrency(value))"
+        result += "CAPITAL RETURN on \(amount) for \(TextPresenter.formattedCurrency(value))"
       case .Dividend(let amount, let value):
-        result += "DIVIDEND on \(amount) for \(self.formattedCurrency(value))"
+        result += "DIVIDEND on \(amount) for \(TextPresenter.formattedCurrency(value))"
       case .Split(let multiplier):
         result += "SPLIT by \(multiplier)"
       case .Unsplit(let multiplier):
@@ -175,14 +170,14 @@ extension TextPresenter {
     switch disposalMatch.kind {
     case .SameDay(let acquisition):
       var output =
-        "SAME DAY: \(acquisition.amount) bought on \(dateFormatter.string(from: acquisition.date)) at £\(acquisition.price)"
+        "SAME DAY: \(acquisition.amount) shares bought on \(dateFormatter.string(from: acquisition.date)) at \(formattedCurrency(acquisition.price))"
       if !acquisition.offset.isZero {
         output += " with offset of £\(acquisition.offset)"
       }
       return output
     case .BedAndBreakfast(let acquisition):
       var output =
-        "BED & BREAKFAST: \(acquisition.amount) bought on \(dateFormatter.string(from: acquisition.date)) at £\(acquisition.price)"
+        "BED & BREAKFAST: \(acquisition.amount) shares bought on \(dateFormatter.string(from: acquisition.date)) at \(formattedCurrency(acquisition.price))"
       if !acquisition.offset.isZero {
         output += " with offset of £\(acquisition.offset)"
       }
@@ -191,29 +186,35 @@ extension TextPresenter {
       }
       return output
     case .Section104(let amountAtDisposal, let costBasis):
-      return "SECTION 104: \(amountAtDisposal) at cost basis of £\(costBasis.rounded(to: 5).string)"
+      return "SECTION 104: \(amountAtDisposal) shares at cost basis of \(formattedCurrency(costBasis,5))"
     }
   }
 
   private static func disposalResultCalculationString(_ disposalResult: CalculatorResult.DisposalResult) -> String {
-    var output =
-      "(\(disposalResult.disposal.amount) * \(disposalResult.disposal.price) - \(disposalResult.disposal.expenses)) - ( "
+      
+    var output = "\n • PROCEEDS:\n\t\(disposalResult.disposal.amount) shares x \(formattedCurrency(disposalResult.disposalUnitPrice)) = \(formattedCurrency(disposalResult.grossProceeds))\n • COSTS:\n\tDisposal fees: \(formattedCurrency(disposalResult.disposal.expenses))\n"
+
     var disposalMatchesStrings: [String] = []
     for disposalMatch in disposalResult.disposalMatches {
+                
       switch disposalMatch.kind {
       case .SameDay(let acquisition), .BedAndBreakfast(let acquisition):
-        var output = "(\(acquisition.amount) * \(acquisition.price) + \(acquisition.expenses)"
+          var output = "\tAcquisition cost: (\(acquisition.amount) shares x \(acquisition.price)) + \(formattedCurrency(acquisition.expenses)) fees = \(formattedCurrency(disposalMatch.acquisitionCostIncludingExpenses))"
         if !acquisition.offset.isZero {
           output += " + \(acquisition.offset)"
         }
-        output += ")"
+        //output += ")"
         disposalMatchesStrings.append(output)
       case .Section104(_, let costBasis):
-        disposalMatchesStrings.append("(\(disposalMatch.disposal.amount) * \(costBasis.rounded(to: 5).string))")
+          disposalMatchesStrings.append("\tAcquisition cost: \(disposalMatch.disposal.amount) shares x \(formattedCurrency(costBasis,5)) = \(formattedCurrency(disposalMatch.acquisitionCostIncludingExpenses))")
       }
     }
-    output += disposalMatchesStrings.joined(separator: " + ")
-    output += " ) = \(disposalResult.gain)"
+    output += disposalMatchesStrings.joined(separator: "\n")
+    output += "\n\nTotal proceeds = \(formattedCurrency(disposalResult.grossProceeds))"
+    output += "\nTotal costs    = \(formattedCurrency(disposalResult.allowableCosts))"
+    output += "\n\nTotal gain     = \(formattedCurrency(disposalResult.gain))"
+    output += "\nTotal loss     = \(formattedCurrency(disposalResult.loss))"
+    
     return output
   }
 }

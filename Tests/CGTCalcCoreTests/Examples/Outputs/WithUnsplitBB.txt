@@ -1,22 +1,35 @@
 # SUMMARY
 
-Tax year    Gain   Proceeds   Exemption   Loss carry   Taxable gain   Tax (basic)   Tax (higher)
-================================================================================================
-2018/2019   £40    £240       £11700      £0           £0             £0            £0          
+Tax year    No. Disposals   Proceeds   Allowable Costs   Gain b/f Losses   Losses   Net Gain   Exemption   Loss carry   Taxable gain   Tax (basic)   Tax (higher)
+=================================================================================================================================================================
+2018/2019   1               £240       £200              £40               £0       £40        £11700      £0           £0             £0            £0          
 
 
 # TAX YEAR DETAILS
 
 ## TAX YEAR 2018/2019
 
-1 gains with total of 40.
-0 losses with total of 0.
+1) SOLD 20 shares of FOO at £12 per share on 01/02/2019 for GAIN of £40
 
-1) SOLD 20 of FOO on 01/02/2019 for GAIN of £40
-Matches with:
-  - BED & BREAKFAST: 10 bought on 10/02/2019 at £10
-  - BED & BREAKFAST: 5 bought on 20/02/2019 at £20 with restructure multiplier 0.5
-Calculation: (20 * 12 - 0) - ( (10 * 10 + 0) + (5 * 20 + 0) ) = 40
+Matches with holdings(s):
+  • BED & BREAKFAST: 10 shares bought on 10/02/2019 at £10
+  • BED & BREAKFAST: 5 shares bought on 20/02/2019 at £20 with restructure multiplier 0.5
+
+Calculation: 
+ • PROCEEDS:
+	20 shares x £12 = £240
+ • COSTS:
+	Disposal fees: £0
+	Acquisition cost: (10 shares x 10) + £0 fees = £100
+	Acquisition cost: (5 shares x 20) + £0 fees = £100
+
+Total proceeds = £240
+Total costs    = £200
+
+Total gain     = £40
+Total loss     = £0
+
+________________________________________
 
 
 # TRANSACTIONS

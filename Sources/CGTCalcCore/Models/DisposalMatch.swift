@@ -24,6 +24,8 @@ class DisposalMatch {
     return TaxYear(containingDate: self.disposal.date)
   }
 
+  var isGift: Bool { self.disposal.transaction.kind == .Gift }
+  
   enum Kind {
     /**
      * Same day match.
@@ -51,15 +53,22 @@ class DisposalMatch {
   }
 
   var gain: Decimal {
+    return grossDisposalProceeds - self.disposal.expenses - acquisitionCostIncludingExpenses
+  }
+  
+  var grossDisposalProceeds: Decimal {
+    // If this disposal represents a gift then the gain should net to zero
+    // so the proceeds should equal the acquisition costs. Note that for gifts it's assumed the
+    // disposalExpenses are always zero (this is enforced by the parsing of GIFT transactions)
+    return isGift ? acquisitionCostIncludingExpenses : self.disposal.value
+  }
+  
+  var acquisitionCostIncludingExpenses: Decimal {
     switch self.kind {
     case .SameDay(let acquisition), .BedAndBreakfast(let acquisition):
-      let disposalProceeds = self.disposal.value - self.disposal.expenses
-      let acquisitionProceeds = acquisition.value + acquisition.expenses
-      return disposalProceeds - acquisitionProceeds
+      return acquisition.value + acquisition.expenses
     case .Section104(_, let costBasis):
-      let disposalProceeds = self.disposal.value - self.disposal.expenses
-      let acquisitionProceeds = self.disposal.amount * costBasis
-      return disposalProceeds - acquisitionProceeds
+      return (self.disposal.amount * costBasis)
     }
   }
 }

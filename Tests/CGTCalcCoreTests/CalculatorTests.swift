@@ -325,4 +325,32 @@ class CalculatorTests: XCTestCase {
       shouldThrow: false)
     self.runTest(withData: testData)
   }
+
+  func testGiftEvents() throws {
+    let testData = TestData(
+      transactions: [
+        ModelCreation.transaction(.Gift, "01/03/2018", "Foo", "2.0"),
+        ModelCreation.transaction(.Buy, "01/01/2018", "Foo", "2.0", "100.0", "0.0")
+      ],
+      assetEvents: [],
+      gains: [
+        TaxYear(yearEnding: 2018): Decimal(string: "0")!
+      ],
+      shouldThrow: false)
+    self.runTest(withData: testData)
+  }
+
+  func testGiftEventsFailsIfGiftingMoreThanOwned() throws {
+    let testData = TestData(
+      transactions: [
+        ModelCreation.transaction(.Gift, "01/03/2018", "Foo", "3.0"),
+        ModelCreation.transaction(.Buy, "01/01/2018", "Foo", "2.0", "100.0", "0.0")
+      ],
+      assetEvents: [],
+      gains: [
+        TaxYear(yearEnding: 2018): Decimal(string: "0")!
+      ],
+      shouldThrow: true)
+    self.runTest(withData: testData)
+  }
 }
